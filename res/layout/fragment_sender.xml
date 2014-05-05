@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Ascii$DummySectionFragment" >
+
+    <TextView
+        android:id="@+id/input_label_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title1"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="16dp"
+        android:text="Please input:" />
+
+    <EditText
+        android:id="@+id/ascii_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_label_1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Ultrasound Sender"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ascii_input"
+        android:layout_centerHorizontal="true"
+        android:text="Ultrasound!" />
+
+    <TextView
+        android:id="@+id/output_label_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/input_label_1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="26dp"
+        android:text="Result:" />
+
+    <EditText
+        android:id="@+id/binery_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ascii_input"
+        android:layout_below="@+id/output_label_1"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="textMultiLine|number" />
+
+</RelativeLayout>
