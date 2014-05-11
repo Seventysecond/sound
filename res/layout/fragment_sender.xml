@@ -37,6 +37,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
         android:text="Ultrasound Sender"
+        android:textSize="22dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000" />
 
