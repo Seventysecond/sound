@@ -1,6 +1,10 @@
 package somitsolutions.android.audio;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,20 +17,30 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
-public class SoundRecordAndAnalysisActivity extends Activity implements
-		OnClickListener {
+@SuppressLint("ValidFragment")
+public class SoundRecordAndAnalysisActivity extends FragmentActivity implements
+		ActionBar.TabListener {
 
 	int frequency = 44100;
 	int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -35,27 +49,65 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 	private RealDoubleFFT transformer;
 	int blockSize = 1411;
 	int xLength = 1411;
-	Button startStopButton;
+	ImageButton startStopButton;
 	boolean started = false;
 	TextView freq1, freq2;
 
 	RecordAudio recordTask;
-	ImageView imageViewDisplaySectrum;
+	/*ImageView imageViewDisplaySectrum;
 	MyImageView imageViewScale;
 	Bitmap bitmapDisplaySpectrum;
 
 	Canvas canvasDisplaySpectrum;
 
 	Paint paintSpectrumDisplay;
-	Paint paintScaleDisplay;
+	Paint paintScaleDisplay;*/
 	static SoundRecordAndAnalysisActivity mainActivity;
 	LinearLayout main;
 	long currentTime = 0;
+	SectionsPagerAdapter mSectionsPagerAdapter;
+	ViewPager mViewPager;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		// Set up the action bar.
+		final ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the app.
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		// When swiping between different sections, select the corresponding
+		// tab. We can also use ActionBar.Tab#select() to do this if we have
+		// a reference to the Tab.
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+					}
+				});
+
+		// For each of the sections in the app, add a tab to the action bar.
+		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+			// Create a tab with text corresponding to the page title defined by
+			// the adapter. Also specify this Activity object, which implements
+			// the TabListener interface, as the callback (listener) for when
+			// this tab is selected.
+			actionBar.addTab(actionBar.newTab()
+					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					.setTabListener(this));
+		}
 	}
 
 	private class RecordAudio extends AsyncTask<Void, double[], Void> {
@@ -118,8 +170,8 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 				x = i;
 				downy = (int) (200 - (toTransform[0][i] * 3));
 				upy = 200;
-				canvasDisplaySpectrum.drawLine(x - 1000, downy, x - 1000, upy,
-						paintSpectrumDisplay);
+				/*canvasDisplaySpectrum.drawLine(x - 1000, downy, x - 1000, upy,
+						paintSpectrumDisplay);*/
 
 				if (downy < 50) {
 					if (x == 1151 || x == 1152)// 18000
@@ -147,32 +199,24 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 				if (time >= 1000) {
 					currentTime = System.currentTimeMillis();
 					freq2.setText("0" + f1 + f2 + f3 + f4 + f5 + f6 + f7);
-					freq2.append("一秒更新一次:" + BinaryToAscii(freq2.getText().toString()));
+					freq2.append("一秒更新一次:"
+							+ BinaryToAscii(freq2.getText().toString()));
 				}
 			}
 
 			Log.v("Mylog", "freq:0" + f1 + f2 + f3 + f4 + f5 + f6 + f7);
 
-			imageViewDisplaySectrum.invalidate();
+			//imageViewDisplaySectrum.invalidate();
 		}
 
 	}
 
-	public void onClick(View v) {
+	public void setStartStatus(boolean status) {
+		started = true;
+	}
 
-		if (started == true) {
-			started = false;
-			startStopButton.setText("Start");
-			recordTask.cancel(true);
-			recordTask = null;
-			canvasDisplaySpectrum.drawColor(Color.BLACK);
-		} else {
-			started = true;
-			startStopButton.setText("Stop");
-			recordTask = new RecordAudio();
-			recordTask.execute();
-		}
-
+	public boolean getStartStatus() {
+		return started;
 	}
 
 	static SoundRecordAndAnalysisActivity getMainActivity() {
@@ -187,16 +231,8 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 
 	public void onStart() {
 		super.onStart();
-		main = new LinearLayout(this);
-		main.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				android.view.ViewGroup.LayoutParams.FILL_PARENT));
-		main.setOrientation(LinearLayout.VERTICAL);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 		transformer = new RealDoubleFFT(blockSize);
-
-		imageViewDisplaySectrum = new ImageView(this);
-		bitmapDisplaySpectrum = Bitmap.createBitmap((int) xLength - 1000,
+		/*bitmapDisplaySpectrum = Bitmap.createBitmap((int) xLength - 1000,
 				(int) 400, Bitmap.Config.ARGB_8888);
 		canvasDisplaySpectrum = new Canvas(bitmapDisplaySpectrum);
 		paintSpectrumDisplay = new Paint();
@@ -204,43 +240,8 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 		imageViewDisplaySectrum.setImageBitmap(bitmapDisplaySpectrum);
 		imageViewDisplaySectrum.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		main.addView(imageViewDisplaySectrum);
-
-		imageViewScale = new MyImageView(this);
-
-		imageViewScale.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		main.addView(imageViewScale);
-
-		startStopButton = new Button(this);
-		startStopButton.setText("Start");
-		startStopButton.setOnClickListener(this);
-		startStopButton.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-
-		main.addView(startStopButton);
-
-		freq1 = new TextView(this);
-		freq2 = new TextView(this);
-
-		freq1.setText("HI");
-		freq1.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-
-		freq2.setText("HI");
-		freq2.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-
-		main.addView(freq1);
-		main.addView(freq2);
-
-		setContentView(main);
-		mainActivity = this;
+				LinearLayout.LayoutParams.WRAP_CONTENT));*/
+		
 	}
 
 	@Override
@@ -351,5 +352,121 @@ public class SoundRecordAndAnalysisActivity extends Activity implements
 				break;
 		}
 		return str;
+	}
+
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			if (position == 0) {
+				Fragment fragment = new ReceiverFragment();
+				return fragment;
+			} else {
+				Fragment fragment = new SenderFragment();
+				return fragment;
+			}
+		}
+
+		@Override
+		public int getCount() {
+			// Show 2 total pages.
+			return 2;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			// Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return "接收";
+			case 1:
+				return "傳送";
+				// case 2:
+				// return getString(R.string.title_section3).toUpperCase(l);
+				// case 3:
+				// return "my tabneme";
+			}
+			return null;
+		}
+	}
+
+	// / Tab 1
+
+	public class ReceiverFragment extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_receiver,
+					container, false);
+			freq1 = (TextView) rootView.findViewById(R.id.freq_1);
+			freq2 = (TextView) rootView.findViewById(R.id.freq_2);
+			startStopButton = (ImageButton) rootView
+					.findViewById(R.id.receive_btn);
+			startStopButton.setOnClickListener(startstop);
+
+			return rootView;
+		}
+
+		private OnClickListener startstop = new OnClickListener() {
+			public void onClick(View v) {
+				if (started == true) {
+					started = false;
+					Toast.makeText(getActivity(), "stop", Toast.LENGTH_SHORT)
+							.show();
+					recordTask.cancel(true);
+					recordTask = null;
+					//canvasDisplaySpectrum.drawColor(Color.BLACK);
+				} else {
+					started = true;
+					recordTask = new RecordAudio();
+					recordTask.execute();
+					Toast.makeText(getActivity(), "start", Toast.LENGTH_SHORT)
+							.show();
+				}
+			}
+		};
+	}
+
+	// / Tab 2
+	public static class SenderFragment extends Fragment implements
+			OnClickListener {
+		// public static final String ARG_SECTION_NUMBER = "section_number";
+
+		private EditText input, output;
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_sender,
+					container, false);
+			return rootView;
+		}
+
+		public void onClick(View v) {
+		}
+	}
+
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
+
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
 	}
 }
