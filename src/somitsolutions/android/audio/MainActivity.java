@@ -116,6 +116,9 @@ public class MainActivity extends FragmentActivity implements
 			case 2:
 				Fragment fragment3 = new MessageFragment();
 				return fragment3;
+			case 3:
+				Fragment fragment4 = new HistoryFragment();
+				return fragment4;	
 			}
 			return null;
 		}
@@ -123,7 +126,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -136,6 +139,8 @@ public class MainActivity extends FragmentActivity implements
 				return "¶Ç°e";
 			case 2:
 				return "°T®§";
+			case 3:
+				return "°O¿ý";	
 			}
 			return null;
 		}
