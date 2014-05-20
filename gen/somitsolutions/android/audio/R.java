@@ -42,21 +42,14 @@ public final class R {
     }
     public static final class id {
         public static final int History=0x7f090000;
-        public static final int Message_Message=0x7f09000e;
-        public static final int Message_Name=0x7f09000d;
-        public static final int ascii_input=0x7f090009;
-        public static final int binery_output=0x7f09000c;
-        public static final int freq_1=0x7f090005;
-        public static final int freq_2=0x7f090006;
-        public static final int input_label_1=0x7f090007;
+        public static final int Message_Time=0x7f090007;
+        public static final int Message_Url=0x7f090006;
+        public static final int freq_1=0x7f090004;
+        public static final int freq_2=0x7f090005;
         public static final int listView1=0x7f090001;
-        public static final int message=0x7f090002;
-        public static final int output_label_1=0x7f09000b;
-        public static final int pager=0x7f09000f;
-        public static final int receive_btn=0x7f090004;
-        public static final int send_btn=0x7f09000a;
-        public static final int show_message=0x7f090003;
-        public static final int title1=0x7f090008;
+        public static final int pager=0x7f090008;
+        public static final int receive_btn=0x7f090003;
+        public static final int show_message=0x7f090002;
     }
     public static final class integer {
         public static final int font_size_medium_raw=0x7f060000;
@@ -66,9 +59,8 @@ public final class R {
         public static final int fragment_history=0x7f030000;
         public static final int fragment_message=0x7f030001;
         public static final int fragment_receiver=0x7f030002;
-        public static final int fragment_sender=0x7f030003;
-        public static final int list_message=0x7f030004;
-        public static final int main=0x7f030005;
+        public static final int list_message=0x7f030003;
+        public static final int main=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f070001;

@@ -8,11 +8,11 @@
 			  android:dividerPadding="1dp">
 
 	<TextView
-			android:id="@+id/Message_Name"
+			android:id="@+id/Message_Url"
 			style="@style/MessageListCell"/>
 	
 	<TextView
-			android:id="@+id/Message_Message"
+			android:id="@+id/Message_Time"
 			style="@style/MessageListCell"/>
 		
 </LinearLayout>

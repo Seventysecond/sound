@@ -19,7 +19,7 @@ public class MessageListViewAdapter extends BaseAdapter {
     private List<MessageDomain> data;
     Context mContext;
     private Cursor userCursor;
-    final String[] usercol = {"name", "age", "gender", "birthday", "lasteditdate"};
+    final String[] usercol = {"url", "time"};
    
     public MessageListViewAdapter(Context context, List<MessageDomain> data) {
         this.inflater = LayoutInflater.from(context);
@@ -47,11 +47,11 @@ public class MessageListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_message, null);
         }
 
-        final TextView tvName = (TextView) convertView.findViewById(R.id.Message_Name);
-        final TextView tvAge = (TextView) convertView.findViewById(R.id.Message_Message);
+        final TextView tvUrl = (TextView) convertView.findViewById(R.id.Message_Url);
+        final TextView tvMessage = (TextView) convertView.findViewById(R.id.Message_Time);
 
-        tvName.setText((String) data.get(position).getMessage_Name());
-        tvAge.setText((String) data.get(position).getMessage_Message());
+        tvUrl.setText((String) data.get(position).getMessage_Url());
+        tvMessage.setText((String) data.get(position).getMessage_Time());
 
         return convertView;
     }

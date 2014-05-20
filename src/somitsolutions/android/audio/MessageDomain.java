@@ -2,33 +2,33 @@ package somitsolutions.android.audio;
 
 public class MessageDomain {
 
-	private String Message_Name;
-	private String Message_Message;
+	private String Message_Url;
+	private String Message_Time;
 
 	public MessageDomain(){}
 
-	public MessageDomain(String name, String message){
-		this.Message_Name = name;
-		this.Message_Message = message;
+	public MessageDomain(String url, String time){
+		this.Message_Url = url;
+		this.Message_Time = time;
 	}
 	
-	public String getMessage_Name() {
-		return Message_Name;
+	public String getMessage_Url() {
+		return Message_Url;
 	}
 
-    public void setMessage_Name(String name) {
-		this.Message_Name = name;
+    public void setMessage_Url(String Url) {
+		this.Message_Url = Url;
 	}
 
-    public String getMessage_Message() {
-		return Message_Message;
+    public String getMessage_Time() {
+		return Message_Time;
 	}
 
-    public void setMessage_Message(String message) {
-		this.Message_Message = message;
+    public void setMessage_Time(String time) {
+		this.Message_Time = time;
 	}
     @Override
 	public String toString() {
-		return Message_Name;
+		return Message_Url;
 	}
 }

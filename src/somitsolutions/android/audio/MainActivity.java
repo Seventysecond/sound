@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity implements
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 	String message;
-
+	Fragment fragment2;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,14 +112,11 @@ public class MainActivity extends FragmentActivity implements
 				Fragment fragment1 = new ReceiverFragment();
 				return fragment1;
 			case 1:
-				Fragment fragment2 = new SenderFragment();
+				fragment2 = new MessageFragment();
 				return fragment2;
 			case 2:
-				Fragment fragment3 = new MessageFragment();
+				Fragment fragment3 = new HistoryFragment();
 				return fragment3;
-			case 3:
-				Fragment fragment4 = new HistoryFragment();
-				return fragment4;
 			}
 			return null;
 		}
@@ -127,7 +124,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 4;
+			return 3;
 		}
 
 		@Override
@@ -137,10 +134,8 @@ public class MainActivity extends FragmentActivity implements
 			case 0:
 				return "接收";
 			case 1:
-				return "傳送";
-			case 2:
 				return "訊息";
-			case 3:
+			case 2:
 				return "記錄";
 			}
 			return null;
@@ -149,16 +144,19 @@ public class MainActivity extends FragmentActivity implements
 
 	public void setCurrentTab(int position) {
 		mViewPager.setCurrentItem(position);
+		if (position == 1) {
+			((MessageFragment) fragment2).reloadUrl();
+		}
 	}
-	
+
 	public void setMessage(String text) {
 		message = text;
 	}
-	
+
 	public String getMessage() {
 		return message;
 	}
-	
+
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		mViewPager.setCurrentItem(tab.getPosition());

@@ -27,7 +27,7 @@ public class HistoryFragment extends Fragment {
 	private ArrayAdapter<String> listAdapter;
     Uri uri_user;
     private Cursor userCursor;
-    final String[] usercol = { "name", "message" };
+    final String[] usercol = { "url", "time" };
     List<MessageDomain> list = new ArrayList<MessageDomain>();// the list of all data
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,9 @@ public class HistoryFragment extends Fragment {
                     usercol, null, null, null);
             userCursor.moveToFirst();
             for (int i = 0; i < userCursor.getCount(); i++) {
-            	Log.v("tony","userCursor.getCount()"+userCursor.getCount());
             	domain = new MessageDomain();
-            	domain.setMessage_Name(userCursor.getString(0));
-            	domain.setMessage_Message(userCursor.getString(1));
+            	domain.setMessage_Url(userCursor.getString(0));
+            	domain.setMessage_Time(userCursor.getString(1));
             	list.add(domain);
                 userCursor.moveToNext();
             }
@@ -67,11 +66,12 @@ public class HistoryFragment extends Fragment {
 			
 			public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
 	            // TODO Auto-generated method stub
-	            TextView tvName = (TextView) view.findViewById(R.id.Message_Name);
-	            TextView tvMessage = (TextView) view.findViewById(R.id.Message_Message);
-	            String name = tvName.getText().toString();
-	            String message = tvMessage.getText().toString();
-	            Toast.makeText(getActivity(), name+message, Toast.LENGTH_SHORT).show();
+	            TextView tvUrl = (TextView) view.findViewById(R.id.Message_Url);
+	            TextView tvTime = (TextView) view.findViewById(R.id.Message_Time);
+	            String url = tvUrl.getText().toString();
+	            String time = tvTime.getText().toString();
+	            mActivity.setMessage(url);
+	            mActivity.setCurrentTab(1);
 	        }
 	   
 	    });

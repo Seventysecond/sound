@@ -31,8 +31,8 @@ public class MessageProvider extends ContentProvider {
 		@Override
 		public void onCreate(SQLiteDatabase db) { // Table name
 			String sqluser = "CREATE TABLE user ("
-					+ "id INTEGER primary key autoincrement," + "name TEXT ,"
-					+ "message TEXT);";
+					+ "id INTEGER primary key autoincrement," + "url TEXT ,"
+					+ "time TEXT);";
 
 			db.execSQL(sqluser);
 		}

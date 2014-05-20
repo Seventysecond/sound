@@ -1,5 +1,8 @@
 package somitsolutions.android.audio;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import ca.uol.aig.fftpack.RealDoubleFFT;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -37,7 +40,7 @@ public class ReceiverFragment extends Fragment {
 
     Uri uri_user;
     private Cursor userCursor;
-    final String[] usercol = { "name", "message" };
+    final String[] usercol = { "url", "time" };
 	
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -172,11 +175,14 @@ public class ReceiverFragment extends Fragment {
 							+ BinaryToAscii(soundcode));
 					if (!soundcode.equals("00000000")) {
                         ContentValues values = new ContentValues();
-                        values.put("name", "tony");
-                        values.put("message", BinaryToAscii(soundcode));
+                        values.put("url", BinaryToAscii(soundcode));
+                        String DATE_FORMAT_NOW = "yyyy-MM-dd";
+                        Calendar tmpCal = Calendar.getInstance();
+                        SimpleDateFormat tmpSDF = new SimpleDateFormat(DATE_FORMAT_NOW);
+                        values.put("time", tmpSDF.format(tmpCal.getTime()));
                         getActivity().getContentResolver().insert(uri_user, values);
-						mActivity.setCurrentTab(2);
-						mActivity.setMessage(BinaryToAscii(soundcode));
+						mActivity.setCurrentTab(1);
+						mActivity.setMessage("http://goo.gl/" + BinaryToAscii(soundcode));
 					}
 				}
 			}
