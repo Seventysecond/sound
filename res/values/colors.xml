@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="table_header_grey">#ebebeb</color>
+    <color name="light_grey">#c7d0d2</color>
+    <color name="dim_grey">#a0a0a0</color>
+    <color name="grey">#6f6f6f</color>
+    <color name="dark_grey">#393b3b</color>
+    <color name="orange">#f39800</color>
+    <color name="green">#7c8b39</color>
+    <color name="dark_teal">#2d474d</color>
+    <color name="teal">#2a6069</color>
+    <color name="light_teal">#3f7078</color>
+    <color name="transparent_teal">#80799ba1</color>
+</resources>

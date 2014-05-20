@@ -44,6 +44,7 @@ public class MainActivity extends FragmentActivity implements
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
+	String message;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -118,7 +119,7 @@ public class MainActivity extends FragmentActivity implements
 				return fragment3;
 			case 3:
 				Fragment fragment4 = new HistoryFragment();
-				return fragment4;	
+				return fragment4;
 			}
 			return null;
 		}
@@ -140,12 +141,24 @@ public class MainActivity extends FragmentActivity implements
 			case 2:
 				return "°T®§";
 			case 3:
-				return "°O¿ý";	
+				return "°O¿ý";
 			}
 			return null;
 		}
 	}
 
+	public void setCurrentTab(int position) {
+		mViewPager.setCurrentItem(position);
+	}
+	
+	public void setMessage(String text) {
+		message = text;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		mViewPager.setCurrentItem(tab.getPosition());

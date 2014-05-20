@@ -1,10 +1,13 @@
 package somitsolutions.android.audio;
 
 import ca.uol.aig.fftpack.RealDoubleFFT;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,9 +35,14 @@ public class ReceiverFragment extends Fragment {
 	boolean started = false;
 	long currentTime = 0;
 
-	@Override
+    Uri uri_user;
+    private Cursor userCursor;
+    final String[] usercol = { "name", "message" };
+	
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        uri_user = Uri.parse("content://" + Constant.AUTHORITY + "/user");
 	}
 
 	@Override
@@ -63,7 +71,7 @@ public class ReceiverFragment extends Fragment {
 				recordTask.cancel(true);
 				recordTask = null;
 			} else {
-				started = true;	
+				started = true;
 				recordTask = new RecordAudio();
 				recordTask.execute();
 				Toast.makeText(getActivity(), "start", Toast.LENGTH_SHORT)
@@ -132,10 +140,6 @@ public class ReceiverFragment extends Fragment {
 				x = i;
 				downy = (int) (200 - (toTransform[0][i] * 3));
 				upy = 200;
-				/*
-				 * canvasDisplaySpectrum.drawLine(x - 1000, downy, x - 1000,
-				 * upy, paintSpectrumDisplay);
-				 */
 
 				if (downy < 50) {
 					if (x == 1151 || x == 1152)// 18000
@@ -154,7 +158,8 @@ public class ReceiverFragment extends Fragment {
 						f7 = 1;
 				}
 			}
-			freq1.setText("0" + f1 + f2 + f3 + f4 + f5 + f6 + f7);
+			String soundcode = "0" + f1 + f2 + f3 + f4 + f5 + f6 + f7;
+			freq1.setText(soundcode);
 			freq1.append(BinaryToAscii(freq1.getText().toString()));
 			if (currentTime == 0) {
 				currentTime = System.currentTimeMillis();
@@ -162,9 +167,17 @@ public class ReceiverFragment extends Fragment {
 				long time = System.currentTimeMillis() - currentTime;
 				if (time >= 1000) {
 					currentTime = System.currentTimeMillis();
-					freq2.setText("0" + f1 + f2 + f3 + f4 + f5 + f6 + f7);
+					freq2.setText(soundcode);
 					freq2.append("一秒更新一次:"
-							+ BinaryToAscii(freq2.getText().toString()));
+							+ BinaryToAscii(soundcode));
+					if (!soundcode.equals("00000000")) {
+                        ContentValues values = new ContentValues();
+                        values.put("name", "tony");
+                        values.put("message", BinaryToAscii(soundcode));
+                        getActivity().getContentResolver().insert(uri_user, values);
+						mActivity.setCurrentTab(2);
+						mActivity.setMessage(BinaryToAscii(soundcode));
+					}
 				}
 			}
 

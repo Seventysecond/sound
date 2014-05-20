@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <dimen name="font_size_medium">23dp</dimen>
+    <dimen name="font_size_small">20dp</dimen>
+    <dimen name="font_size_xsmall">18dp</dimen>
+    <integer name="font_size_medium_raw">23</integer>
+    <integer name="font_size_small_raw">20</integer>
+    <dimen name="dialog_btn_min_width">200dp</dimen>
+    <dimen name="font_size_benefit">23dp</dimen>
+
+    <dimen name="general_left_margin">46dp</dimen>
+
+</resources>

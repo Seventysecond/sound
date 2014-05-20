@@ -10,30 +10,71 @@ package somitsolutions.android.audio;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int black=0x7f040002;
+        public static final int dark_grey=0x7f040007;
+        public static final int dark_teal=0x7f04000a;
+        public static final int dim_grey=0x7f040005;
+        public static final int green=0x7f040009;
+        public static final int grey=0x7f040006;
+        public static final int light_grey=0x7f040004;
+        public static final int light_teal=0x7f04000c;
+        public static final int orange=0x7f040008;
+        public static final int table_header_grey=0x7f040003;
+        public static final int teal=0x7f04000b;
+        public static final int transparent=0x7f040000;
+        public static final int transparent_teal=0x7f04000d;
+        public static final int white=0x7f040001;
+    }
+    public static final class dimen {
+        public static final int dialog_btn_min_width=0x7f050003;
+        public static final int font_size_benefit=0x7f050004;
+        /**  General 
+         */
+        public static final int font_size_medium=0x7f050000;
+        public static final int font_size_small=0x7f050001;
+        public static final int font_size_xsmall=0x7f050002;
+        public static final int general_left_margin=0x7f050005;
+    }
     public static final class drawable {
         public static final int circle=0x7f020000;
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int ascii_input=0x7f050005;
-        public static final int binery_output=0x7f050008;
-        public static final int freq_1=0x7f050001;
-        public static final int freq_2=0x7f050002;
-        public static final int input_label_1=0x7f050003;
-        public static final int output_label_1=0x7f050007;
-        public static final int pager=0x7f050009;
-        public static final int receive_btn=0x7f050000;
-        public static final int send_btn=0x7f050006;
-        public static final int title1=0x7f050004;
+        public static final int History=0x7f090000;
+        public static final int Message_Message=0x7f09000e;
+        public static final int Message_Name=0x7f09000d;
+        public static final int ascii_input=0x7f090009;
+        public static final int binery_output=0x7f09000c;
+        public static final int freq_1=0x7f090005;
+        public static final int freq_2=0x7f090006;
+        public static final int input_label_1=0x7f090007;
+        public static final int listView1=0x7f090001;
+        public static final int message=0x7f090002;
+        public static final int output_label_1=0x7f09000b;
+        public static final int pager=0x7f09000f;
+        public static final int receive_btn=0x7f090004;
+        public static final int send_btn=0x7f09000a;
+        public static final int show_message=0x7f090003;
+        public static final int title1=0x7f090008;
+    }
+    public static final class integer {
+        public static final int font_size_medium_raw=0x7f060000;
+        public static final int font_size_small_raw=0x7f060001;
     }
     public static final class layout {
-        public static final int fragment_message=0x7f030000;
-        public static final int fragment_receiver=0x7f030001;
-        public static final int fragment_sender=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int fragment_history=0x7f030000;
+        public static final int fragment_message=0x7f030001;
+        public static final int fragment_receiver=0x7f030002;
+        public static final int fragment_sender=0x7f030003;
+        public static final int list_message=0x7f030004;
+        public static final int main=0x7f030005;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int app_name=0x7f070001;
+        public static final int hello=0x7f070000;
+    }
+    public static final class style {
+        public static final int MessageListCell=0x7f080000;
     }
 }

@@ -34,7 +34,7 @@ public class MessageFragment extends Fragment {
 	
 	private void initUI(View v) {
 		TextView myTextView = (TextView)v.findViewById(R.id.show_message);
-        myTextView.setText("test");
+        myTextView.setText(mActivity.getMessage());
         Button History = (Button)v.findViewById(R.id.History);
         History.setOnClickListener(chat);
         
