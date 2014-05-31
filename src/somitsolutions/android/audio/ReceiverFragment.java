@@ -147,7 +147,7 @@ public class ReceiverFragment extends Fragment {
 				if (downy < 50) {
 					if (x == 1151 || x == 1152)// 18000
 						f1 = 1;
-					if (x == 1177 || x == 1178)// 18250
+					if (x == 1167 || x == 1168)// 18250
 						f2 = 1;
 					if (x == 1183 || x == 1184)// 18500
 						f3 = 1;
