@@ -37,15 +37,16 @@ public class ReceiverFragment extends Fragment {
 	int blockSize = 1411;
 	boolean started = false;
 	long currentTime = 0;
+	String urlMessage;
+	Uri uri_user;
+	private Cursor userCursor;
+	final String[] usercol = { "url", "time" };
 
-    Uri uri_user;
-    private Cursor userCursor;
-    final String[] usercol = { "url", "time" };
-	
-    @Override
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        uri_user = Uri.parse("content://" + Constant.AUTHORITY + "/user");
+		urlMessage = "";
+		uri_user = Uri.parse("content://" + Constant.AUTHORITY + "/user");
 	}
 
 	@Override
@@ -168,21 +169,27 @@ public class ReceiverFragment extends Fragment {
 				currentTime = System.currentTimeMillis();
 			} else {
 				long time = System.currentTimeMillis() - currentTime;
-				if (time >= 1000) {
+				if (time >= 500) {
 					currentTime = System.currentTimeMillis();
 					freq2.setText(soundcode);
-					freq2.append("一秒更新一次:"
-							+ BinaryToAscii(soundcode));
+					freq2.append("一秒更新一次:" + BinaryToAscii(soundcode));
 					if (!soundcode.equals("00000000")) {
-                        ContentValues values = new ContentValues();
-                        values.put("url", BinaryToAscii(soundcode));
-                        String DATE_FORMAT_NOW = "yyyy-MM-dd";
-                        Calendar tmpCal = Calendar.getInstance();
-                        SimpleDateFormat tmpSDF = new SimpleDateFormat(DATE_FORMAT_NOW);
-                        values.put("time", tmpSDF.format(tmpCal.getTime()));
-                        getActivity().getContentResolver().insert(uri_user, values);
-						mActivity.setCurrentTab(1);
-						mActivity.setMessage("http://goo.gl/" + BinaryToAscii(soundcode));
+						urlMessage += BinaryToAscii(soundcode);
+						if (urlMessage.length() == 6) {
+							ContentValues values = new ContentValues();
+							values.put("url", "http://goo.gl/"
+									+ urlMessage);
+							String DATE_FORMAT_NOW = "yyyy-MM-dd";
+							Calendar tmpCal = Calendar.getInstance();
+							SimpleDateFormat tmpSDF = new SimpleDateFormat(
+									DATE_FORMAT_NOW);
+							values.put("time", tmpSDF.format(tmpCal.getTime()));
+							getActivity().getContentResolver().insert(uri_user,
+									values);
+							mActivity.setCurrentTab(1);
+							mActivity.setMessage("http://goo.gl/"
+									+ urlMessage);
+						}
 					}
 				}
 			}
